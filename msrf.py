@@ -23,15 +23,15 @@ from keras.layers import Dense, Dropout,Input,Average,Conv2DTranspose,SeparableC
 from keras import backend as K
 from keras.layers import concatenate ,Lambda
 import itertools
-from keras.layers.normalization import BatchNormalization
-from keras.optimizers import SGD
+from keras.layers import BatchNormalization
+from tensorflow.keras.optimizers import SGD
 from keras.callbacks import LearningRateScheduler, ModelCheckpoint 
 import tensorflow as tf
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
-from keras.applications import ResNet50,VGG19,VGG16,DenseNet121,DenseNet169,InceptionResNetV2
+from tensorflow.keras.applications import ResNet50,VGG19,VGG16,DenseNet121,DenseNet169,InceptionResNetV2
 from tensorflow.keras.losses import BinaryCrossentropy,CategoricalCrossentropy
 import numpy as np
 from skimage.morphology import square,binary_erosion,binary_dilation,binary_opening,binary_closing
@@ -39,7 +39,7 @@ from skimage.morphology import erosion, dilation, opening, closing, white_tophat
 from skimage.morphology import black_tophat, skeletonize, convex_hull_image
 from keras.initializers import RandomNormal
 from keras.layers.advanced_activations import LeakyReLU
-from keras.optimizers import RMSprop
+from tensorflow.keras.optimizers import RMSprop
 from keras import regularizers
 from keras.models import Model
 from keras.callbacks import ModelCheckpoint
@@ -60,7 +60,7 @@ import numpy as np
 import cv2
 import tensorflow as tf
 from tensorflow.keras.callbacks import *
-from keras.optimizers import Adam, Nadam
+from tensorflow.keras.optimizers import Adam, Nadam
 from tensorflow.keras.metrics import *
 from glob import glob
 from sklearn.model_selection import train_test_split
@@ -804,7 +804,7 @@ def compute_iou(y_pred, y_true):
     y_pred = y_pred.flatten()
     y_true = y_true.flatten()
     intersection = (y_true * y_pred).sum()
-    #intersection = np.sum(intersection)     
+    #intersection = np.sum(intersection)    
     union = y_true.sum() + y_pred.sum() - intersection
     current = confusion_matrix(y_true, y_pred, labels=[0, 1])
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred, labels=[0, 1]).ravel()
