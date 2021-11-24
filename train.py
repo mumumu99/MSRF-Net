@@ -60,6 +60,7 @@ import numpy as np
 import cv2
 from model import msrf
 from model import *
+#from msrf import *
 import tensorflow as tf
 from tensorflow.keras.callbacks import *
 from tensorflow.keras.optimizers import Adam, Nadam
@@ -179,6 +180,14 @@ Y_val = np.array(Y_val).astype(np.float32)
            
 Y_val  =  np.expand_dims(Y_val,axis=3)
 
+def seg_loss(y_true, y_pred):
+    dice_s = dice_coefficient_loss(y_true,y_pred)
+
+        #ce_loss = BinaryCrossentropy(y_true,y_pred)
+    ce_loss =tf.keras.backend.binary_crossentropy(y_true,y_pred)
+
+    return ce_loss +dice_s
+
 def el(y_true, y_pred):
     l = keras.losses.BinaryCrossentropy(y_true,y_pred)
     return l
@@ -211,7 +220,7 @@ def train(epochs, batch_size,output_dir, model_save_dir):
     
     batch_count = int(len(train_x) / batch_size)
     max_val_dice= -1
-    G = sau()
+    G = msrf()
     G.summary()
     optimizer = get_optimizer()
     G.compile(optimizer = optimizer, loss = {'x':seg_loss,'edge_out':'binary_crossentropy','pred4':seg_loss,'pred2':seg_loss},loss_weights={'x':2.,'edge_out':1.,'pred4':1. , 'pred2':1.})
